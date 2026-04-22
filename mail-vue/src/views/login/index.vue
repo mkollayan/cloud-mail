@@ -1,5 +1,5 @@
 <template>
-  <div id="login-box" :style=" background ? 'background: var(--el-bg-color)' : ''" v-loading="oauthLoading" element-loading-text="登录中...">
+  <div id="login-box" :style=" background ? 'background: var(--el-bg-color)' : ''" v-loading="oauthLoading" :element-loading-text="$t('loginLoadingText')">
     <div id="background-wrap" v-if="!settingStore.settings.background">
       <div class="x1 cloud"></div>
       <div class="x2 cloud"></div>
@@ -106,7 +106,7 @@
         </template>
       </div>
     </div>
-    <el-dialog class="bind-dialog" v-model="showBindForm"  title="注册邮箱" >
+    <el-dialog class="bind-dialog" v-model="showBindForm" :title="$t('bindEmailTitle')" >
       <div class="bind-container">
         <el-input v-model="bindForm.email" type="text" :placeholder="$t('emailAccount')" autocomplete="off">
           <template #append>
@@ -136,7 +136,7 @@
         <el-input v-if="settingStore.settings.regKey === 2" v-model="bindForm.code"
                   :placeholder="$t('regKeyOptional')" type="text" autocomplete="off"/>
         <el-button class="btn" type="primary" @click="bind" :loading="bindLoading"
-        >绑定
+        >{{ $t('bindBtn') }}
         </el-button>
       </div>
     </el-dialog>
@@ -211,7 +211,7 @@ window.onTurnstileError = (e) => {
     return
   }
   verifyErrorCount++
-  console.warn('人机验加载失败', e)
+  console.warn('Turnstile load failed', e)
   setTimeout(() => {
     nextTick(() => {
       if (!turnstileId) {
@@ -275,7 +275,7 @@ async function linuxDoGetUser() {
         showBindForm.value = true
         oauthLoading.value = false
         ElMessage({
-          message: '请注册绑定一个邮箱',
+          message: t('oauthBindMsg'),
           type: 'warning',
           duration: 4000,
           plain: true,
@@ -488,7 +488,7 @@ function submitRegister() {
             turnstileId = window.turnstile.render('.register-turnstile')
           } catch (e) {
             botJsError.value = true
-            console.log('人机验证js加载失败')
+            console.log('Turnstile JS load failed')
           }
         } else {
           window.turnstile.reset('.register-turnstile')
