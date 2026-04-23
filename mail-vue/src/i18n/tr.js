@@ -329,6 +329,9 @@ const tr = {
     bindEmailTitle: 'E-posta Kayıt',
     bindBtn: 'Bağla',
     oauthBindMsg: 'Lütfen bir e-posta hesabı kaydedin ve bağlayın',
+    emailSignature: 'E-posta İmzası',
+    emailSignatureDesc: 'Gönderilen tüm e-postalara otomatik eklenir',
+    emailSignaturePlaceholder: 'İmza metnini buraya girin...',
 }
 
 export default tr

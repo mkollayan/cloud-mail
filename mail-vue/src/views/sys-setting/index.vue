@@ -189,6 +189,25 @@
                   </el-button>
                 </div>
               </div>
+              <div class="setting-item signature-item">
+                <div>
+                  <span>{{ $t('emailSignature') }}</span>
+                  <el-tooltip effect="dark" :content="$t('emailSignatureDesc')">
+                    <Icon class="warning" icon="fe:warning" width="18" height="18"/>
+                  </el-tooltip>
+                </div>
+                <div class="signature-box">
+                  <el-input
+                      type="textarea"
+                      :rows="4"
+                      :placeholder="$t('emailSignaturePlaceholder')"
+                      v-model="setting.emailSignature"
+                  />
+                  <el-button size="small" type="primary" @click="saveSignature" :loading="signatureLoading">
+                    {{ $t('save') }}
+                  </el-button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -764,6 +783,7 @@ const localUpShow = ref(false)
 const accountStore = useAccountStore();
 const userStore = useUserStore();
 const editTitleShow = ref(false)
+const signatureLoading = ref(false)
 const resendTokenFormShow = ref(false)
 const r2DomainShow = ref(false)
 const turnstileShow = ref(false)
@@ -1245,6 +1265,15 @@ function openResendForm() {
   resendTokenFormShow.value = true
 }
 
+function saveSignature() {
+  signatureLoading.value = true
+  settingSet({ emailSignature: setting.value.emailSignature }).then(() => {
+    ElMessage({ message: t('saveSuccessMsg'), type: 'success', plain: true })
+  }).finally(() => {
+    signatureLoading.value = false
+  })
+}
+
 function saveResendToken() {
   const settingForm = {
     resendTokens: {}
@@ -1657,6 +1686,23 @@ function editSetting(settingForm, refreshStatus = true) {
     justify-content: space-between;
     .el-select {
       width: v-bind(tgMsgLabelWidth);
+    }
+  }
+}
+
+.signature-item {
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 8px;
+
+  .signature-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .el-button {
+      align-self: flex-end;
     }
   }
 }

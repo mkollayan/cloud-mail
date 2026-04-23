@@ -329,6 +329,9 @@ const en = {
     bindEmailTitle: 'Register Email',
     bindBtn: 'Bind',
     oauthBindMsg: 'Please register and bind an email',
+    emailSignature: 'Email Signature',
+    emailSignatureDesc: 'Automatically appended to all outgoing emails',
+    emailSignaturePlaceholder: 'Enter your signature here...',
 }
 
 export default en

@@ -163,9 +163,13 @@ const emailService = {
 			attachments //附件
 		} = params;
 
-		const { resendTokens, r2Domain, send, domainList } = await settingService.query(c);
+		const { resendTokens, r2Domain, send, domainList, emailSignature } = await settingService.query(c);
 
 		let { imageDataList, html } = await attService.toImageUrlHtml(c, content);
+
+		if (emailSignature) {
+			html += `<br><hr style="border:none;border-top:1px solid #eee;margin:16px 0"><div style="color:#555;font-size:13px;">${emailSignature}</div>`;
+		}
 
 		//判断是否关闭发件功能
 		if (send === settingConst.send.CLOSE) {
