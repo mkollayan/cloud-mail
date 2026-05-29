@@ -1,12 +1,20 @@
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
+import 'dayjs/locale/tr'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import {useSettingStore} from "@/store/setting.js";
 const settingStore = useSettingStore();
 dayjs.extend(utc)
 dayjs.extend(timezone)
-dayjs.locale(settingStore.lang === 'en' ? 'en' : 'zh-cn')
+
+function getDayjsLocale(lang) {
+    if (lang === 'en') return 'en'
+    if (lang === 'tr') return 'tr'
+    return 'zh-cn'
+}
+
+dayjs.locale(getDayjsLocale(settingStore.lang))
 const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export function fromNow(date) {
@@ -16,6 +24,7 @@ export function fromNow(date) {
     const diffMinutes = now.diff(d, 'minute');
     const diffHours = now.diff(d, 'hour');
     const isToday = now.isSame(d, 'day');
+
     if (settingStore.lang === 'en') {
 
         if (isToday) {
@@ -33,6 +42,21 @@ export function fromNow(date) {
             ? d.format('MMM D')
             : d.format('YYYY/MM/DD');
 
+    } else if (settingStore.lang === 'tr') {
+
+        if (isToday) {
+            if (diffSeconds < 60) return `Az önce`;
+            if (diffMinutes < 60) return `${diffMinutes} dk önce`;
+            if (diffHours >= 1 && diffHours < 2) return '1 saat önce';
+            return d.format('HH:mm');
+        } else if (now.subtract(1, 'day').isSame(d, 'day')) {
+            return `Dün ${d.format('HH:mm')}`;
+        } else if (now.subtract(2, 'day').isSame(d, 'day')) {
+            return `Önceki gün ${d.format('HH:mm')}`;
+        }
+        return d.year() === now.year()
+            ? d.format('D MMM')
+            : d.format('DD.MM.YYYY');
 
     } else {
 
@@ -75,6 +99,10 @@ export function formatDetailDate(time) {
         return isSameYear
             ? d.format('ddd, MMM D, h:mm A')
             : d.format('ddd, MMM D, YYYY, h:mm A');
+    } else if (settingStore.lang === 'tr') {
+        return isSameYear
+            ? d.format('ddd, D MMM, HH:mm')
+            : d.format('ddd, D MMM YYYY, HH:mm');
     } else {
         return d.format('YYYY年M月D日 ddd AH:mm');
     }
@@ -89,5 +117,5 @@ export function toUtc(time) {
 }
 
 export function setExtend(lang) {
-    dayjs.locale(lang)
+    dayjs.locale(getDayjsLocale(lang))
 }

@@ -177,9 +177,14 @@ const emailService = {
 			attachments = [] //附件
 		} = params;
 
-		const { resendTokens, r2Domain, send, domainList } = await settingService.query(c);
+		const { resendTokens, r2Domain, send, domainList, emailSignature } = await settingService.query(c);
 
 		let { imageDataList, html } = await attService.toImageUrlHtml(c, content);
+
+		//全局邮件签名 / Global email signature
+		if (emailSignature) {
+			html += this.formatEmailSignature(emailSignature);
+		}
 
 		//判断是否关闭发件功能
 		if (send === settingConst.send.CLOSE) {
@@ -994,6 +999,18 @@ const emailService = {
 	async physicsDeleteByAccountId(c, accountId) {
 		await attService.removeByAccountId(c, accountId);
 		await orm(c).delete(email).where(eq(email.accountId, accountId)).run();
+	},
+
+	formatEmailSignature(signature) {
+		const escapedSignature = String(signature)
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;')
+			.replace(/\r?\n/g, '<br>');
+
+		return `<br><hr style="border:none;border-top:1px solid #eee;margin:16px 0"><div style="color:#555;font-size:13px;line-height:1.5;">${escapedSignature}</div>`;
 	},
 
 	async read(c, params, userId) {

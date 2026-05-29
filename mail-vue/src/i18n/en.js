@@ -338,7 +338,14 @@ const en = {
     searchUser: 'Search by user',
     searchEmail: 'Search by Email',
     searchSender: 'Search by Sender',
-    userEmail: 'Email Address'
+    userEmail: 'Email Address',
+    loginLoadingText: 'Signing in...',
+    bindEmailTitle: 'Register Email',
+    bindBtn: 'Bind',
+    oauthBindMsg: 'Please register and bind an email',
+    emailSignature: 'Email Signature',
+    emailSignatureDesc: 'Automatically appended to all outgoing emails',
+    emailSignaturePlaceholder: 'Enter your signature here...'
 }
 
 export default en

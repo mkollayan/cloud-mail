@@ -338,6 +338,13 @@ const zh = {
     searchUser: '搜索用户',
     searchEmail: '搜索邮箱',
     searchSender: '搜索发件人',
-    userEmail: '用户邮箱'
+    userEmail: '用户邮箱',
+    loginLoadingText: '登录中...',
+    bindEmailTitle: '注册邮箱',
+    bindBtn: '绑定',
+    oauthBindMsg: '请注册绑定一个邮箱',
+    emailSignature: '邮件签名',
+    emailSignatureDesc: '自动添加到所有发送的邮件末尾',
+    emailSignaturePlaceholder: '在此输入签名内容...'
 }
 export default zh
