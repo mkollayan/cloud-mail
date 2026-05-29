@@ -344,6 +344,7 @@ const zh = {
     oauthBindMsg: '请注册绑定一个邮箱',
     emailSignature: '邮件签名',
     emailSignatureDesc: '自动添加到所有发送的邮件末尾',
-    emailSignaturePlaceholder: '在此输入签名内容...'
+    emailSignaturePlaceholder: '在此输入签名内容...',
+    trustLevel: '等级'
 }
 export default zh

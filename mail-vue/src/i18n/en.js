@@ -344,7 +344,8 @@ const en = {
     oauthBindMsg: 'Please register and bind an email',
     emailSignature: 'Email Signature',
     emailSignatureDesc: 'Automatically appended to all outgoing emails',
-    emailSignaturePlaceholder: 'Enter your signature here...'
+    emailSignaturePlaceholder: 'Enter your signature here...',
+    trustLevel: 'Trust Level'
 }
 
 export default en
