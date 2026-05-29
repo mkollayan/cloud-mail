@@ -208,6 +208,31 @@
                   </el-button>
                 </div>
               </div>
+              <div class="setting-item signature-item">
+                <div>
+                  <span>{{ $t('emailSignature') }}</span>
+                  <el-tooltip effect="dark" :content="$t('emailSignatureDesc')">
+                    <Icon class="warning" icon="fe:warning" width="18" height="18"/>
+                  </el-tooltip>
+                </div>
+                <div>
+                  <el-input
+                      v-model="setting.emailSignature"
+                      type="textarea"
+                      :autosize="{ minRows: 3, maxRows: 6 }"
+                      :placeholder="$t('emailSignaturePlaceholder')"
+                  />
+                  <el-button
+                      class="signature-save"
+                      type="primary"
+                      size="small"
+                      :loading="signatureLoading"
+                      @click="saveSignature"
+                  >
+                    {{ $t('save') }}
+                  </el-button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -859,6 +884,7 @@ const uiStore = useUiStore();
 const {settings: setting} = storeToRefs(settingStore);
 const editTitle = ref('')
 const settingLoading = ref(false)
+const signatureLoading = ref(false)
 const clearS3Loading = ref(false)
 const r2DomainInput = ref('')
 const loginOpacity = ref(0)
@@ -1490,6 +1516,22 @@ function jump(href) {
   doc.click()
 }
 
+function saveSignature() {
+  if (signatureLoading.value) return
+  signatureLoading.value = true
+
+  settingSet({emailSignature: setting.value.emailSignature || ''}).then(() => {
+    ElMessage({
+      message: t('saveSuccessMsg'),
+      type: "success",
+      plain: true
+    })
+    getSettings()
+  }).finally(() => {
+    signatureLoading.value = false
+  })
+}
+
 function editSetting(settingForm, refreshStatus = true) {
   if (settingLoading.value) return
   settingLoading.value = true
@@ -1879,6 +1921,28 @@ function editSetting(settingForm, refreshStatus = true) {
 .email-prefix {
   display: flex;
   justify-content: space-between;
+}
+
+.signature-item {
+  align-items: stretch;
+  flex-direction: column;
+
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .signature-save {
+    align-self: flex-end;
+    margin-top: 0 !important;
+  }
 }
 
 .prefix-filter {
