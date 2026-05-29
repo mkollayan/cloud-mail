@@ -31,8 +31,33 @@ const dbInit = {
 		await this.v3_0DB(c);
 		await this.v3_1DB(c);
 		await this.v3_2DB(c);
+		await this.v3_3DB(c);
 		await settingService.refresh(c);
 		return c.text('success');
+	},
+
+	async v3_3DB(c) {
+		try {
+			await c.env.db.prepare(`
+				UPDATE setting
+				SET notice_content = 'Bu proje yalnızca öğrenme ve paylaşım amaçlıdır, yasa dışı faaliyetler için kullanılması yasaktır.\n<br>\nLütfen yerel yasalara uyun; geliştirici herhangi bir hukuki sorumluluk kabul etmez.'
+				WHERE notice_content = '本项目仅供学习交流，禁止用于违法业务\n<br>\n请遵守当地法规，作者不承担任何法律责任';
+			`).run();
+		} catch (e) {
+			console.warn(`跳过字段：${e.message}`);
+		}
+
+		try {
+			await c.env.db.prepare(`
+				UPDATE role
+				SET name = 'Normal Kullanıcı',
+					description = 'Standart kullanıcı yetkileri'
+				WHERE name = '普通用户'
+					AND description = '只有普通使用权限';
+			`).run();
+		} catch (e) {
+			console.warn(`跳过字段：${e.message}`);
+		}
 	},
 
 	async v3_2DB(c) {
@@ -203,9 +228,9 @@ const dbInit = {
 
 	async v1_6DB(c) {
 
-		const noticeContent = '本项目仅供学习交流，禁止用于违法业务\n' +
+		const noticeContent = 'Bu proje yalnızca öğrenme ve paylaşım amaçlıdır, yasa dışı faaliyetler için kullanılması yasaktır.\n' +
 			'<br>\n' +
-			'请遵守当地法规，作者不承担任何法律责任'
+			'Lütfen yerel yasalara uyun; geliştirici herhangi bir hukuki sorumluluk kabul etmez.'
 
 		const ADD_COLUMN_SQL_LIST = [
 			`ALTER TABLE setting ADD COLUMN reg_verify_count INTEGER NOT NULL DEFAULT 1;`,
@@ -505,7 +530,7 @@ const dbInit = {
         INSERT INTO role (
           role_id, name, key, create_time, sort, description, user_id, is_default, send_count, send_type, account_count
         ) VALUES (
-          1, '普通用户', NULL, '0000-00-00 00:00:00', 0, '只有普通使用权限', 0, 1, NULL, 'ban', 10
+          1, 'Normal Kullanıcı', NULL, '0000-00-00 00:00:00', 0, 'Standart kullanıcı yetkileri', 0, 1, NULL, 'ban', 10
         )
       `).run();
 		}

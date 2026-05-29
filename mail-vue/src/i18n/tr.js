@@ -345,6 +345,7 @@ const tr = {
     emailSignature: 'E-posta İmzası',
     emailSignatureDesc: 'Gönderilen tüm e-postalara otomatik eklenir',
     emailSignaturePlaceholder: 'İmza metnini buraya girin...',
+    trustLevel: 'Güven Seviyesi',
 }
 
 export default tr
