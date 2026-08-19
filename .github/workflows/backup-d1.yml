@@ -1,0 +1,49 @@
+name: 🗄️ Backup D1 Database
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # 03:00 UTC = 06:00 Türkiye saati, her gün
+  workflow_dispatch:
+
+jobs:
+  backup:
+    name: 📦 Export and upload D1 backup
+    runs-on: ubuntu-latest
+
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || vars.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+
+    steps:
+      - name: 🚚 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙ Set up pnpm
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: 11
+
+      - name: ⚙ Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+          cache-dependency-path: "./mail-worker/pnpm-lock.yaml"
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: ./mail-worker
+
+      - name: 🐬 Export D1 database
+        working-directory: ./mail-worker
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          echo "BACKUP_FILE=email-$TIMESTAMP.sql" >> "$GITHUB_ENV"
+          pnpm wrangler d1 export email --remote --output="email-$TIMESTAMP.sql"
+
+      - name: ⬆️ Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BACKUP_FILE }}
+          path: mail-worker/${{ env.BACKUP_FILE }}
+          retention-days: 90
