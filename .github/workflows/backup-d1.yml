@@ -1,10 +1,8 @@
 name: 🗄️ Backup D1 Database
 
 on:
-  # DURDURULDU: public repoda Actions artifact'ları herkese açık indirilebiliyor.
-  # Depolama yöntemi değişmeden cron'u tekrar açma.
-  # schedule:
-  #   - cron: '0 3 * * *'  # 03:00 UTC = 06:00 Türkiye saati, her gün
+  schedule:
+    - cron: '0 3 * * *'  # 03:00 UTC = 06:00 Türkiye saati, her gün
   workflow_dispatch:
 
 jobs:
@@ -43,9 +41,7 @@ jobs:
           echo "BACKUP_FILE=email-$TIMESTAMP.sql" >> "$GITHUB_ENV"
           pnpm wrangler d1 export email --remote --output="email-$TIMESTAMP.sql"
 
-      - name: ⬆️ Upload backup artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.BACKUP_FILE }}
-          path: mail-worker/${{ env.BACKUP_FILE }}
-          retention-days: 90
+      - name: ⬆️ Upload backup to R2
+        working-directory: ./mail-worker
+        run: |
+          pnpm wrangler r2 object put "cloud-mail-backups/${{ env.BACKUP_FILE }}" --file="${{ env.BACKUP_FILE }}" --remote
