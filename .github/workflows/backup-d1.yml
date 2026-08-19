@@ -1,8 +1,10 @@
 name: 🗄️ Backup D1 Database
 
 on:
-  schedule:
-    - cron: '0 3 * * *'  # 03:00 UTC = 06:00 Türkiye saati, her gün
+  # DURDURULDU: public repoda Actions artifact'ları herkese açık indirilebiliyor.
+  # Depolama yöntemi değişmeden cron'u tekrar açma.
+  # schedule:
+  #   - cron: '0 3 * * *'  # 03:00 UTC = 06:00 Türkiye saati, her gün
   workflow_dispatch:
 
 jobs:
