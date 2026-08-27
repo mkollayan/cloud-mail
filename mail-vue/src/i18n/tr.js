@@ -267,6 +267,7 @@ const tr = {
     rulesVerify: 'Kurallar',
     rulesVerifyTitle: 'IP başına günlük {count} kullanımdan sonra tetikle',
     botVerifyMsg: 'Lütfen insan olduğunuzu doğrulayın',
+    oauthLogin: 'OAuth2',
     noticeTitle: 'Duyuru',
     noticePopup: 'Giriş Açılır Penceresi',
     icon: 'Simge',
@@ -331,6 +332,13 @@ const tr = {
     codeLabel: 'Kod: ',
     cloudflareEmailSending: 'Cloudflare E-posta Gönderimi',
     blackList: 'Engelleme Listesi',
+    autoClean: 'Otomatik Temizleme',
+    autoCleanDesc: 'Belirlenen günden eski e-postaları otomatik siler. 0 = kapalı.',
+    autoCleanDays: 'Saklama Süresi',
+    autoCleanRetain: '{days} gün sakla',
+    autoCleanExclude: 'Hariç Tutulan Kullanıcılar',
+    autoCleanExcludeDesc: 'Temizlenmeyecek kullanıcı e-postalarını girin',
+    dayUnit: ' gün',
     blackListDesc: 'Aşağıdaki bilgileri içeren e-postaları reddet',
     blackFromDesc: 'Gönderen veya alan adı',
     blackSubjectDesc: 'Konu',
@@ -347,6 +355,10 @@ const tr = {
     emailSignatureDesc: 'Gönderilen tüm e-postalara otomatik eklenir',
     emailSignaturePlaceholder: 'İmza metnini buraya girin...',
     trustLevel: 'Güven Seviyesi',
+    oauthSetting: 'OAuth',
+    clientId: 'Client ID',
+    clientSecret: 'Client Secret',
+    notOwner: 'Temel e-posta size ait değil',
 }
 
 export default tr

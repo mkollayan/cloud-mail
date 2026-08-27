@@ -15,6 +15,8 @@ const tr = {
     noOsDomainSendAtt: 'Ekler gönderilemiyor: nesne depolama etki alanı yapılandırılmamış',
     noOsSendAtt: 'Ekler gönderilemiyor: nesne depolama yapılandırılmamış',
     disabledSend: 'E-posta gönderme özelliği devre dışı',
+    oauthDisabled: 'Bu OAuth girişi etkin değil',
+    notOwner: 'Temel e-posta size ait değil',
     daySendLimit: 'Günlük gönderim sınırına ulaşıldı',
     totalSendLimit: 'Toplam gönderim sınırına ulaşıldı',
     daySendLack: 'Bugün yeterli gönderim hakkı kalmadı',
