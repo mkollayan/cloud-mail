@@ -25,6 +25,10 @@ app.onError((err, c) => {
 		return c.json(result.fail('D1 veritabanı bağlı değil / D1 database not bound',502));
 	}
 
+	if (err.message?.includes('D1_ERROR: no such column')) {
+		return c.json(result.fail('Veritabanını dokümana göre güncelleyin / Please update the database as documented',502));
+	}
+
 	return c.json(result.fail(err.message, err.code));
 });
 

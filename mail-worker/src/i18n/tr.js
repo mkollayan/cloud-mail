@@ -3,6 +3,7 @@ const tr = {
     addAccountDisabled: 'E-posta Adresi Ekle özelliği devre dışı',
     regDisabled: 'Kayıt devre dışı',
     emptyEmail: 'E-posta boş olamaz',
+    emptyAccountId: 'accountId boş olamaz',
     notEmail: 'Geçersiz e-posta',
     notExistDomain: 'E-posta etki alanı mevcut değil',
     isDelAccount: 'Bu e-posta silinmiş',
