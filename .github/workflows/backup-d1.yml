@@ -39,7 +39,13 @@ jobs:
         run: |
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
           echo "BACKUP_FILE=email-$TIMESTAMP.sql" >> "$GITHUB_ENV"
-          pnpm wrangler d1 export email --remote --output="email-$TIMESTAMP.sql"
+          # wrangler prints a presigned download URL for the export; this repo is
+          # public, so keep its output out of the Actions log
+          if ! pnpm wrangler d1 export email --remote --output="email-$TIMESTAMP.sql" > export.log 2>&1; then
+            sed -E 's#https?://[^[:space:]]+#[redacted-url]#g' export.log
+            exit 1
+          fi
+          echo "Exported email-$TIMESTAMP.sql ($(du -h "email-$TIMESTAMP.sql" | cut -f1))"
 
       - name: ⬆️ Upload backup to R2
         working-directory: ./mail-worker
