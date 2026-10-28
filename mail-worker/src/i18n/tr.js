@@ -69,6 +69,10 @@ const tr = {
     notAdmin: 'Girilen e-posta bir yönetici e-postası değil',
     emailExistDatabase: 'E-posta veritabanında zaten mevcut',
     notConfigOss: 'Nesne depolama yapılandırılmamış',
+    resendRecipientLimit: 'Resend ile ayrı gönderim en fazla 100 alıcıyı destekler',
+    resendSeparateAttachments: 'Resend ile ayrı gönderimde ek dosya desteklenmez',
+    noRegKeyCount: 'Davet kodunun kalan kullanım hakkı yok',
+    notExist: 'Rol mevcut değil',
     perms: {
         "邮件": "E-postalar",
         "邮件发送": "E-posta Gönder",
