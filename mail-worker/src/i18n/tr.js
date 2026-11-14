@@ -73,6 +73,7 @@ const tr = {
     resendSeparateAttachments: 'Resend ile ayrı gönderimde ek dosya desteklenmez',
     noRegKeyCount: 'Davet kodunun kalan kullanım hakkı yok',
     notExist: 'Rol mevcut değil',
+    recipientLimit: 'Alıcı, bilgi (CC) ve gizli (BCC) toplamı 50 alıcıyı geçemez',
     perms: {
         "邮件": "E-postalar",
         "邮件发送": "E-posta Gönder",
